@@ -1,0 +1,36 @@
+.main-container {
+
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+
+}
+
+.field-wrap {
+	margin: auto;
+	margin-top: 10px;
+}
+
+.field-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+
+}
+
+.field-cell {
+	background-image: url('../img/hole.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 20vh;
+	width: 20vh;
+	margin: 10px;
+	min-height: 56px;
+	min-width: 56px;
+}
+
+.goblin {
+	background-image: url('../img/goblin.png');
+}
