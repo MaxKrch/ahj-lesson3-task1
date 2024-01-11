@@ -8,9 +8,17 @@
 
 }
 
+.title {
+	position: flex;
+	margin: auto;
+	font-size: 20px;
+	font-weight: 700;
+}
+
 .field-wrap {
 	margin: auto;
 	margin-top: 10px;
+	text-align: center;
 }
 
 .field-row {
@@ -29,8 +37,10 @@
 	margin: 10px;
 	min-height: 56px;
 	min-width: 56px;
+	cursor: url('../img/hammer.png'), pointer;
 }
 
 .goblin {
 	background-image: url('../img/goblin.png');
 }
+

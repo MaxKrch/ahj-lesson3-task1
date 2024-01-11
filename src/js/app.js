@@ -1,3 +1,8 @@
-import Controller from "./Controller.js";
+import GameController from "./GameController";
+import GameState from "./GameState";
+import GameRender from "./GameRender";
 
-new Controller("#app");
+const gameState = new GameState(5);
+const gameRender = new GameRender(4);
+
+new GameController("#app", gameState, gameRender);
