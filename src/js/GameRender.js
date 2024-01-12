@@ -51,7 +51,7 @@ export default class GameRender {
 		const modal = document.createElement("div");
 		modal.classList.add("gameover-wrap", "hidden-item");
 		modal.innerHTML = `
-			<button class="new-game new-game-modal">Начать занова</button>
+			<button class="new-game new-game-modal">Начать заново</button>
 		`;
 		return modal;
 	}
@@ -62,7 +62,7 @@ export default class GameRender {
 		title.innerHTML = `
 			<p class="title-mess">Бей гоблина - набирай очки.</p> 
 			<p class="title-mess">${maxMiss} сбежавших гоблинов или твоих промахов - GameOver!</p>
-			<button class="new-game">Начать занова</button>
+			<button class="new-game">Начать заново</button>
 		`;
 
 		return title;
