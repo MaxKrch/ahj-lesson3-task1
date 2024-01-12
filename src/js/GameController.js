@@ -12,14 +12,26 @@ export default class GameController {
 
 	registerEvent() {
 		this.gameRender.field.addEventListener("click", (event) => {
-			this.hitHole(event);
+			if (event.target.classList.contains("field-cell")) {
+				this.hitHole(event);
+			}
+		});
+
+		const newGame = document.querySelectorAll(".new-game");
+		newGame.forEach((item) => {
+			item.addEventListener("click", () => {
+				this.startNewGame();
+			});
 		});
 	}
 
 	init() {
 		this.gameRender.createCells();
 		this.gameRender.renderField(this.container, this.state.maxMiss);
-		this.choiceCellWithGoblin();
+
+		setTimeout(() => {
+			this.choiceCellWithGoblin();
+		}, 1000);
 	}
 
 	receivingCells() {
@@ -108,5 +120,9 @@ export default class GameController {
 			const newMaxPoints = this.state.points;
 			localStorage.setItem("maxPointsGoblin", JSON.stringify(newMaxPoints));
 		}
+	}
+
+	startNewGame() {
+		location.reload();
 	}
 }

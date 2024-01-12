@@ -3,6 +3,7 @@ export default class GameRender {
 		this.board = board;
 		this.cells = [];
 		this.field = null;
+		this.gameOver = null;
 	}
 
 	createCells() {
@@ -23,8 +24,11 @@ export default class GameRender {
 		const field = document.createElement("div");
 		field.classList.add("field-wrap");
 
-		const title = GameRender.createTitle(maxMiss);
+		const modal = GameRender.createModal();
+		this.gameOver = modal;
+		field.append(modal);
 
+		const title = GameRender.createTitle(maxMiss);
 		field.append(title);
 
 		for (let row of this.cells) {
@@ -39,51 +43,62 @@ export default class GameRender {
 		}
 
 		this.field = field;
+
 		container.append(field);
+	}
+
+	static createModal() {
+		const modal = document.createElement("div");
+		modal.classList.add("gameover-wrap", "hidden-item");
+		modal.innerHTML = `
+			<button class="new-game new-game-modal">Начать заного</button>
+		`;
+		return modal;
 	}
 
 	static createTitle(maxMiss) {
 		const title = document.createElement("div");
 		title.classList.add("title");
 		title.innerHTML = `
-			<p>Привет! Бей гоблина - набирай очки.</p> 
-			<p>${maxMiss} упущенных гоблинов или промахов - GameOver! Удачи!</p>
+			<p class="title-mess">Бей гоблина - набирай очки.</p> 
+			<p class="title-mess">${maxMiss} сбежавших гоблинов или твоих промахов - GameOver!</p>
+			<button class="new-game">Начать заного</button>
 		`;
 
 		return title;
 	}
 
 	renderGameOver(points) {
-		const wrap = document.createElement("div");
-		wrap.classList.add("gameover-wrap");
-
 		const maxSavePointsJSON = localStorage.getItem("maxPointsGoblin");
 		const maxSavePoints = maxSavePointsJSON ? JSON.parse(maxSavePointsJSON) : 0;
+		const messageWrap = document.createElement("div");
 
 		const diff = maxSavePoints - points;
+		console.log(diff, maxSavePoints, points);
 		let messDiff;
 
 		if (diff > 0) {
-			messDiff = `Это немногим меньше рекорда - ${points}!`;
+			messDiff = `Это чуть меньше рекорда - ${maxSavePoints}!`;
 		}
 
 		if (diff < 0) {
-			messDiff = `Это немногим больше рекорда - ${points}!`;
+			messDiff = `Это чуть больше рекорда - ${maxSavePoints}!`;
 		}
 
-		if (diff == 0) {
-			messDiff = `Кстати, ты уже столько набирал!`;
+		if (diff === 0) {
+			messDiff = "";
 		}
 
 		const message = `
-			Проигрыш! Гоблины оказались сильнее тебя - бывает со всеми...
-			Но ты успел убить кучу гоблинов - целых 
-			 ${points}!
-			 ${messDiff}
-			Попробуешь снова?
+			<p class="gameover-mess">GameOver!</p> 
+			<p class="gameover-mess">Гоблины оказались куда сильнее тебя...</p>
+			<p class="gameover-mess">Но ты успел отправить на тот свет кучу гоблинов - ${points}!</p>
+			<p class="gameover-mess">${messDiff}</p>
+			<p class="gameover-mess">Попробуешь снова?</p>
 		`;
 
-		wrap.textContent = message;
-		this.field.append(wrap);
+		this.gameOver.classList.remove("hidden-item");
+		messageWrap.innerHTML = message;
+		this.gameOver.prepend(messageWrap);
 	}
 }
